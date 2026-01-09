@@ -1,0 +1,38 @@
+# Archivos del sistema macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Archivos temporales de Excel
+~$*.xlsx
+~$*.xls
+~$*.xlsm
+
+# Archivos de caché de Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+*.pyc
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
+
+# Entornos virtuales
+venv/
+env/
+.env
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Archivos de log
+*.log
+
+# Archivos temporales
+*.tmp
+*.temp
