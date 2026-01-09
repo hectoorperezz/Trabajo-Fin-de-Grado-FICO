@@ -203,8 +203,3 @@ Este proyecto es parte de un Trabajo de Fin de Grado con fines académicos.
 
 ---
 
-## Contacto
-
-- **Autor**: Héctor Pérez
-- **Email**: [tu-email]
-- **LinkedIn**: [tu-linkedin]
