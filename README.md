@@ -3,8 +3,8 @@
 ## Trabajo de Fin de Grado
 
 **Autor:** Héctor Pérez
-**Universidad:** [Tu Universidad]
-**Grado:** [Tu Grado]
+**Universidad:** Universidad Carlos III de Madrid
+**Grado:** Finanzas y Contabilidad
 **Fecha:** 2024-2025
 
 ---
