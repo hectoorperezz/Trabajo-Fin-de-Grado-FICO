@@ -180,16 +180,6 @@ jupyter notebook
 
 ---
 
-## Resultados Principales
-
-Los resultados detallados se encuentran en el documento del TFG. En resumen:
-
-1. **Modelo Fama-French**: [Resumen de hallazgos]
-2. **Sincronía de retornos**: [Resumen de hallazgos]
-3. **Propiedad institucional**: [Resumen de hallazgos]
-
----
-
 ## Literatura de Referencia
 
 Los principales artículos consultados se encuentran en la carpeta `literatura/`:
