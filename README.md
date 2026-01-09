@@ -1,100 +1,210 @@
-# Financial Analysis Repository
+# ¿Supone la Gestión Pasiva una Amenaza para la Eficiencia de los Mercados de Renta Variable?
 
-This repository contains a collection of financial analyses, primarily focusing on the Fama-French model, stock return synchronicity, and related stock market behaviors. The analyses are primarily conducted using Jupyter Notebooks.
+## Trabajo de Fin de Grado
 
-Key Python libraries utilized include:
-*   `yfinance`: For fetching financial market data.
-*   `pandas`: For data manipulation and analysis.
-*   `numpy`: For numerical operations.
-*   `statsmodels`: For statistical modeling, including regression analysis.
+**Autor:** Héctor Pérez
+**Universidad:** Universidad Carlos III de Madrid
+**Grado:** Finanzas y Contabilidad
+**Fecha:** 2023-2024
 
-## Key Analysis Notebooks
+---
 
-Below are descriptions of the primary Jupyter Notebooks found in this repository:
+## Descripción
 
-### 1. Stock Return Synchronicity Analysis
+Este repositorio contiene el análisis cuantitativo del Trabajo de Fin de Grado que investiga el impacto de la gestión pasiva (fondos indexados y ETFs) en la eficiencia de los mercados de renta variable.
 
-*   **Location:** `Análisis Fama_French/Estructura Final/Stock Return Synchronicity/stock_return_synchronicity_analisys.ipynb`
-*   **Purpose:** This notebook analyzes the synchronicity of stock returns with the overall market. Synchronicity is measured by the R-squared value obtained from market model regressions.
-*   **Methodology:**
-    *   Downloads historical price data for a list of S&P 500 stocks and the S&P 500 index (`^GSPC`) using `yfinance`.
-    *   Calculates logarithmic returns for the stocks and the market.
-    *   Performs Ordinary Least Squares (OLS) regression of individual stock returns against market returns for various periods (e.g., annually for 1995-1999 and a separate analysis for 2020-2023).
-    *   Investigates the potential relationship between institutional ownership percentages and stock market synchronicity.
-*   **Output:** The notebook generates CSV files (e.g., `resultados_YYYY.csv`, `resultados.csv`) containing regression statistics such as Beta, R-squared, and p-values for each analyzed stock and period. It also prints OLS regression results for the ownership vs. synchronicity analysis.
+El estudio examina tres hipótesis principales:
+1. **Impacto en los precios**: ¿Los flujos hacia fondos pasivos afectan a los retornos de las acciones?
+2. **Concentración de propiedad**: ¿Cómo ha evolucionado la propiedad de los "Big Three" (BlackRock, Vanguard, State Street)?
+3. **Sincronía de retornos**: ¿Ha aumentado la correlación entre acciones individuales y el mercado?
 
-### 2. Fama-French 4-Factor Model Analysis
+---
 
-*   **Location:** `Análisis Fama_French/Estructura Final/GITHUB/2020-2024_weekly_4factors_df_model.ipynb`
-*   **Purpose:** This notebook implements a Fama-French 4-factor model to explain stock returns.
-*   **Methodology:**
-    *   Utilizes weekly stock return data for a predefined list of tickers, primarily from 2020 to early 2024. Stock data is fetched using `yfinance`.
-    *   The model incorporates the following factors:
-        *   Market Risk Premium (Mkt-RF)
-        *   Size (SMB)
-        *   Value (HML)
-        *   An additional "Fundflows" factor.
-    *   Factor data is expected to be loaded from a CSV file named `general_csv_weekly_4factors.csv`. *(Note: This file is loaded from `/content/general_csv_weekly_4factors.csv` within the notebook, implying it might need to be manually uploaded to the Colab environment or have its path adjusted if run locally.)*
-    *   Calculates excess returns for each stock (stock return - risk-free rate).
-    *   Performs an OLS regression for each stock against the four factors.
-*   **Output:** The notebook saves the regression results (coefficients for each factor, p-values, R-squared, standard errors, F-statistic, etc.) for all analyzed tickers into a CSV file named `resultados_modelos.csv` (expected in the `/content/` directory in a Colab environment).
+## Estructura del Repositorio
 
-## Data Directories
+```
+├── README.md                           # Este archivo
+├── documento/                          # Documento del TFG
+│   └── Análisis Cuantitativo TFG.docx
+│
+├── analisis/                           # Notebooks de análisis principal
+│   ├── modelo_fama_french/             # Análisis Fama-French 4 factores
+│   │   ├── modelo_4factores_semanal.ipynb
+│   │   └── analisis_por_empresa/       # Análisis individuales
+│   │       ├── apple.ipynb
+│   │       ├── amazon.ipynb
+│   │       ├── microsoft.ipynb
+│   │       ├── google.ipynb
+│   │       ├── nvidia.ipynb
+│   │       ├── tesla.ipynb
+│   │       ├── bank_of_america.ipynb
+│   │       └── sp500.ipynb
+│   │
+│   ├── sincronía_retornos/             # Análisis de sincronía
+│   │   ├── stock_return_synchronicity.ipynb
+│   │   ├── rentabilidades_por_sector.ipynb
+│   │   └── informacion_acciones.ipynb
+│   │
+│   └── propiedad_institucional/        # Análisis Big Three
+│       └── big_three_ownership.ipynb
+│
+├── datos/                              # Datos utilizados
+│   ├── factores_fama_french/           # Factores FF
+│   │   ├── factores_semanales_4f.csv
+│   │   └── factores_mensuales_3f.csv
+│   ├── flujos_etf/                     # Flujos de ETFs
+│   │   └── flujos_etf_diarios.xlsx
+│   ├── acciones/                       # Datos de acciones
+│   │   └── [archivos por ticker]
+│   └── resultados/                     # Resultados de regresiones
+│       └── [archivos de resultados]
+│
+├── literatura/                         # Referencias bibliográficas
+│   ├── papers/                         # Artículos académicos (PDFs)
+│   └── articulos_destacados.txt        # Enlaces a artículos online
+│
+└── auxiliar/                           # Archivos auxiliares y borradores
+    └── [notebooks experimentales]
+```
 
-The repository is organized with the following main data-related directories:
+---
 
-### 1. `CSVs/`
+## Metodología
 
-This directory serves as a central location for various CSV files and some Excel files used or generated by the analyses. It may contain:
+### 1. Modelo Fama-French Ampliado (4 Factores)
 
-*   **Raw and Processed Data:** Files like `Book1.csv`, `daily-etfflow.xlsx` which might be initial data inputs or intermediate processed files.
-*   **Specific Stock Data:** The `CSVs/csv_final/` subdirectory appears to store individualized CSV files for specific stock tickers (e.g., `csv_BANKOFAM.csv`, `csv_apple.csv`).
-*   **Fama-French Factor Data:** The file `general_csv_weekly_4factors.csv` (referenced by the 4-factor model notebook as being in `/content/`) is crucial for one of the main analyses. If you intend to run this notebook, ensure this file is available and the path in the notebook is correctly pointing to it. This file contains weekly data for Mkt-RF, SMB, HML, RF, and Fundflows.
-*   **Analysis Results:** CSV files generated by the `stock_return_synchronicity_analisys.ipynb` notebook, such as `resultados_YYYY.csv` (e.g., `resultados_1995.csv`) and `resultados.csv`.
+Se utiliza el modelo de Fama-French de 3 factores ampliado con un factor de flujos de fondos pasivos:
 
-### 2. `Análisis Fama_French/`
+```
+Ri - Rf = α + β1(Rm-Rf) + β2(SMB) + β3(HML) + β4(FundFlows) + ε
+```
 
-This is the primary directory holding the Jupyter Notebooks for the financial analyses.
+Donde:
+- **Ri - Rf**: Exceso de retorno de la acción i
+- **Rm - Rf**: Prima de riesgo de mercado
+- **SMB**: Factor tamaño (Small Minus Big)
+- **HML**: Factor valor (High Minus Low)
+- **FundFlows**: Flujos netos hacia fondos pasivos
 
-*   **`Estructura Final/`**: This subdirectory seems to contain the most polished or final versions of the analyses.
-    *   **`Stock Return Synchronicity/`**: Contains the notebook for analyzing stock return synchronicity.
-    *   **`GITHUB/`**: Contains the notebook for the Fama-French 4-factor model and other analyses that were possibly prepared for sharing (as implied by the "GITHUB" name).
-    *   Other subdirectories like `Fama_French_Acciones/` and `Stock Ownership/` likely contain more specific or exploratory analyses.
+**Período de análisis**: 2020-2024 (datos semanales)
 
-## How to Use / Running the Analyses
+### 2. Análisis de Sincronía de Retornos
 
-To run the analyses contained in the Jupyter Notebooks, you will generally need:
+Se mide la sincronía mediante el R² del modelo de mercado:
 
-1.  **A Python Environment:** Ensure you have Python installed.
-2.  **Required Libraries:** Install the necessary Python libraries. You can typically install them using pip:
-    ```bash
-    pip install yfinance pandas numpy statsmodels openpyxl
-    ```
-    *   `openpyxl` is included as some `.xlsx` files are present and might be read by pandas.
-3.  **Jupyter Notebook:** You'll need Jupyter Notebook or JupyterLab to open and run the `.ipynb` files.
-4.  **Data Files:**
-    *   **`general_csv_weekly_4factors.csv`:** This file is critical for the Fama-French 4-factor model analysis in `Análisis Fama_French/Estructura Final/GITHUB/2020-2024_weekly_4factors_df_model.ipynb`. The notebook expects this file to be located at `/content/general_csv_weekly_4factors.csv` (common in Google Colab environments).
-        *   If running locally, you will need to ensure this file is present and adjust the path in the notebook accordingly. This file might be available in the `CSVs/csv_final/` directory or may need to be obtained/generated separately.
-    *   Other CSV or Excel files: Some notebooks might depend on other specific data files located within the `CSVs/` directory or its subdirectories. Check the import paths within each notebook.
-5.  **Running Notebooks:**
-    *   Open the Jupyter Notebooks (`.ipynb` files).
-    *   Execute the cells sequentially.
-    *   Be aware that some notebooks download data using `yfinance`, which requires an active internet connection.
-    *   Output files (typically CSVs) are often saved to the notebook's execution environment (e.g., the `/content/` directory in Google Colab). You may need to modify output paths if running in a different setup.
+```
+Ri = α + β(Rm) + ε
+```
 
-## Literature and Resources
+Un R² más alto indica mayor sincronía con el mercado, lo que puede sugerir menor incorporación de información específica de la empresa.
 
-The `Literatura y hemeroteca/` directory contains a collection of supplementary materials that provide context and theoretical background for the analyses performed in this repository. This includes:
+**Períodos comparados**: 1995-1999 vs 2020-2023
 
-*   **Academic Papers:** PDFs of research papers relevant to the Fama-French model, market efficiency, stock return behavior, and passive investing. (e.g., `hidden-power-of-the-big-three-passive-index-funds-re-concentration-of-corporate-ownership-and-new-financial-risk.pdf`, `inelastic_market-hipothesis.pdf`).
-*   **Articles:** A text file (`articulos destacados.txt`) lists URLs to various online articles and forums discussing related financial topics.
-*   **Other Documents:** May include other relevant PDF documents or presentation files.
+### 3. Análisis de Propiedad Institucional
 
-These resources can be helpful for understanding the theoretical underpinnings of the models and concepts explored in the notebooks.
+Se analiza la evolución de la propiedad de los "Big Three":
+- BlackRock
+- Vanguard
+- State Street
 
-## Other Files
+---
 
-The repository also contains other files and directories of note:
+## Requisitos
 
-*   **`Análisis Cuantitativo TFG.docx`**: This is a Microsoft Word document, likely the main thesis, dissertation, or project report for which these analyses were conducted. Its content is not directly viewable in plain text but provides overarching context.
-*   **`tfg curro/`**: This directory appears to contain additional files and data, possibly related to early work, specific data manipulations, or aspects of the "TFG" (Trabajo de Fin de Grado - Degree Final Project). Files within include various CSVs and Excel sheets (e.g., `famafrench-factors.csv`, `stocklist.csv`).
+### Dependencias de Python
+
+```bash
+pip install yfinance pandas numpy statsmodels matplotlib seaborn openpyxl
+```
+
+### Versiones recomendadas
+- Python >= 3.8
+- pandas >= 1.3.0
+- yfinance >= 0.2.0
+- statsmodels >= 0.13.0
+
+---
+
+## Uso
+
+### Ejecutar en Google Colab (Recomendado)
+
+Los notebooks están diseñados para ejecutarse en Google Colab. Simplemente:
+1. Abre el notebook en GitHub
+2. Haz clic en "Open in Colab"
+3. Ejecuta las celdas secuencialmente
+
+### Ejecutar localmente
+
+```bash
+# Clonar el repositorio
+git clone https://github.com/hectoorperezz/-Supone-la-gesti-n-pasiva-una-amenaza-para-la-eficiencia-de-los-mercados-de-renta-variable-.git
+
+# Instalar dependencias
+pip install -r requirements.txt
+
+# Abrir Jupyter
+jupyter notebook
+```
+
+**Nota**: Algunos notebooks descargan datos de Yahoo Finance, por lo que requieren conexión a internet.
+
+---
+
+## Notebooks Principales
+
+| Notebook | Descripción |
+|----------|-------------|
+| `modelo_4factores_semanal.ipynb` | Regresión Fama-French 4 factores para el S&P 500 |
+| `stock_return_synchronicity.ipynb` | Análisis de sincronía de retornos |
+| `big_three_ownership.ipynb` | Evolución propiedad Big Three |
+
+---
+
+## Datos
+
+### Fuentes de datos
+- **Yahoo Finance** (via yfinance): Precios históricos de acciones
+- **Kenneth French Data Library**: Factores Fama-French
+- **ETF.com / Bloomberg**: Flujos de ETFs
+
+### Archivos de datos incluidos
+
+| Archivo | Descripción |
+|---------|-------------|
+| `factores_semanales_4f.csv` | Factores FF + FundFlows semanales |
+| `flujos_etf_diarios.xlsx` | Flujos netos diarios hacia ETFs |
+
+---
+
+## Resultados Principales
+
+Los resultados detallados se encuentran en el documento del TFG. En resumen:
+
+1. **Modelo Fama-French**: [Resumen de hallazgos]
+2. **Sincronía de retornos**: [Resumen de hallazgos]
+3. **Propiedad institucional**: [Resumen de hallazgos]
+
+---
+
+## Literatura de Referencia
+
+Los principales artículos consultados se encuentran en la carpeta `literatura/`:
+
+- Fama, E. F., & French, K. R. (1993). Common risk factors in the returns on stocks and bonds.
+- Gabaix, X., & Koijen, R. S. (2021). In search of the origins of financial fluctuations: The inelastic markets hypothesis.
+- Azar, J., Schmalz, M. C., & Tecu, I. (2018). Anticompetitive effects of common ownership.
+
+---
+
+## Licencia
+
+Este proyecto es parte de un Trabajo de Fin de Grado con fines académicos.
+
+---
+
+## Contacto
+
+- **Autor**: Héctor Pérez
+- **Email**: [tu-email]
+- **LinkedIn**: [tu-linkedin]
