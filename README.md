@@ -5,7 +5,7 @@
 **Autor:** Héctor Pérez
 **Universidad:** Universidad Carlos III de Madrid
 **Grado:** Finanzas y Contabilidad
-**Fecha:** 2024-2025
+**Fecha:** 2023-2024
 
 ---
 
