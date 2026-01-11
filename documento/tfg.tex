@@ -1,0 +1,825 @@
+\documentclass[12pt,a4paper]{article}
+
+% Paquetes
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage[pdftex]{graphicx}
+\graphicspath{{./}{./assets/}}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{tabularx} % Añadido para mejor control de tablas
+\usepackage[breaklinks=true,colorlinks=true,linkcolor=black,citecolor=black,urlcolor=blue]{hyperref}
+\usepackage{geometry}
+\usepackage{natbib}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{setspace}
+\usepackage{fancyhdr}
+\usepackage{abstract}
+\usepackage{microtype} % Mejora la tipografía
+\usepackage{parskip} % Mejora la separación entre párrafos
+\usepackage{enumitem} % Para personalizar listas
+\usepackage{url} % Para manejar URLs largas
+
+% Configuración de página
+\geometry{
+    a4paper,
+    left=3cm,
+    right=3cm,
+    top=3cm,
+    bottom=3cm,
+    headheight=14pt
+}
+\onehalfspacing
+\setlength{\parindent}{0cm}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+
+% Configuración para evitar viudas y huérfanas
+\widowpenalty=10000
+\clubpenalty=10000
+
+% Configuración de figuras y tablas
+\setlength{\textfloatsep}{20pt plus 2pt minus 4pt}
+\setlength{\floatsep}{12pt plus 2pt minus 2pt}
+
+% Encabezado y pie de página
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Gestión Pasiva y Eficiencia del Mercado}
+\lhead{Universidad Carlos III de Madrid}
+\rfoot{\thepage}
+
+% La portada se incluye como imagen
+
+\begin{document}
+
+% Portada con imagen
+\newgeometry{margin=0pt}
+\thispagestyle{empty}
+\noindent
+\makebox[\textwidth][c]{%
+  \includegraphics[width=\paperwidth,height=\paperheight]{portada.jpeg}%
+}
+\restoregeometry
+
+\newpage
+
+% Página de agradecimientos
+\thispagestyle{empty}
+\section*{Agradecimientos}
+
+Antes de adentrarme en el desarrollo de este estudio, quisiera dedicar unas palabras de agradecimiento a varias personas cuyo apoyo ha sido fundamental para la realización de este trabajo.
+
+En primer lugar, quiero expresar mi profunda gratitud a mi tutora, Silvia Mayoral Blaya. Las ideas son muy importantes, pero sin una correcta ejecución no tienen ningún valor. En este caso, la orientación y dedicación de Silvia han sido cruciales para convertir las ideas en realidades. Gracias, Silvia.
+
+Quisiera también agradecer con todo mi corazón a mis padres. Ellos me han inculcado unos valores y una visión del mundo que han sido claves para afrontar mis retos vitales. Su apoyo económico y afectivo ha sido esencial para poder superar mi etapa universitaria. Me siento muy afortunado de tenerles. Asimismo, quiero expresar mi agradecimiento a mi hermano, quien ha sido una referencia constante. Su apoyo y ejemplo me han motivado a esforzarme y dar lo mejor de mí.
+
+Por último, me gustaría agradecer a mis abuelos por su amor y apoyo incondicional a lo largo de mi vida. En especial, a mi abuela Estrella, quien me ha enseñado a luchar siempre y a saber disfrutar de la vida en los buenos y malos momentos. Su sabiduría y fortaleza han sido una inspiración constante para mí.
+
+Un fuerte abrazo a todos.
+
+\newpage
+
+% Resumen
+\begin{abstract}
+\noindent
+En las primeras dos décadas del siglo XXI, se ha producido un cambio radical en las dinámicas de inversión y los productos ofertados por la industria financiera. La revolución de las tecnologías de la información y otras tecnologías clave han democratizado el acceso a los vehículos de inversión y a la educación financiera. Estos factores, junto con el contexto macroeconómico, han impulsado la popularidad de la gestión pasiva a través de fondos indexados y ETFs. Estos productos replican los índices de mercado a un coste mucho menor que la gestión activa. El auge de la gestión pasiva es un fenómeno sin precedentes en la industria de la gestión de activos y plantea muchas preguntas sobre su impacto en los mercados. Frente a este fenómeno, son muchas las voces críticas que se han alzado para advertir que la gestión pasiva podría comprometer la eficiencia del mercado. Este estudio se enfoca en analizar el impacto de la gestión pasiva en las valoraciones del S\&P 500, con el objetivo de entender si representa una amenaza para la eficiencia de los mercados de renta variable.
+
+\textbf{Palabras Clave:} Gestión pasiva, Eficiencia del mercado, Renta variable, Sincronicidad de acciones, Flujos de capital, Descubrimiento de precios.
+
+\textbf{Códigos JEL:} G11, G12, G14, G23, C58, D53
+\end{abstract}
+
+% Abstract en inglés
+\begin{abstract}
+\textbf{Abstract}
+
+\noindent
+In the first two decades of the 21st century, there has been a radical shift in investment dynamics and the products offered by the financial industry. The revolution in information technology and other key technologies have democratized access to investment vehicles and financial education. These factors, along with the macroeconomic context, have driven the popularity of passive management through index funds and ETFs. These products replicate market indices at a much lower cost than active management. The rise of passive management is an unprecedented phenomenon in the asset management industry and raises many questions about its impact on markets. In response to this phenomenon, many critics have raised concerns that passive management could compromise market efficiency. This study focuses on analyzing the impact of passive management on S\&P 500 valuations, with the aim of understanding whether it poses a threat to the efficiency of equity markets.
+
+\textbf{Keywords:} Passive management, Market efficiency, Equity markets, Stock synchronicity, Capital flows, Price discovery.
+
+\textbf{JEL Codes:} G11, G12, G14, G23, C58, D53
+\end{abstract}
+
+\newpage
+
+% Índice
+\tableofcontents
+
+\newpage
+
+% Índice de Ilustraciones y Tablas - CORREGIDO
+\section*{Índice de Ilustraciones y Tablas}
+\addcontentsline{toc}{section}{Índice de Ilustraciones y Tablas}
+
+\subsection*{Tablas}
+\begin{enumerate}[label=Tabla \arabic*., leftmargin=2cm, labelsep=0.5cm]
+\item Estadísticos descriptivos de las variables Sincronicidad y PROP
+\item Correlaciones entre las variables Sincronicidad y PROP
+\item Resultados del Modelo de Sincronicidad univariante
+\item Características de los ETFs seleccionados para la muestra
+\item Acciones significativamente impactadas por los flujos monetarios de ETFs
+\item Resultados de modelo Fama-French de 4 factores sectorial
+\end{enumerate}
+
+\subsection*{Ilustraciones}
+\begin{enumerate}[label=Ilustración \arabic*., leftmargin=3cm, labelsep=0.5cm]
+\item Distribución del mercado de ETFs por estrategias de inversión
+\item Comparación de rendimientos entre fondos activos y pasivos
+\item Evolución de la sincronicidad en el S\&P 500
+\item Evolución de los activos gestionados por ETFs
+\item Coeficientes significativos de la variable $\Delta$Flujos
+\item Comparación de las 36 acciones con el promedio del S\&P 500
+\item Distribución sectorial de las 36 acciones
+\end{enumerate}
+
+\newpage
+
+% Investigación Bibliográfica
+\section*{Investigación Bibliográfica}
+\addcontentsline{toc}{section}{Investigación Bibliográfica}
+
+La ejecución de este trabajo se ha llevado a cabo tras realizar una profunda investigación bibliográfica. Los estudios previos han sido esenciales para establecer un marco teórico robusto, recopilar ideas de análisis y elegir las metodologías más apropiadas.
+
+Entre las referencias más destacadas se encuentra el trabajo de Israeli, Lee y Sridharan (2017), que investiga el impacto de los ETFs en el descubrimiento de precios, proporcionando una base metodológica para analizar la sincronicidad de las acciones. Otro estudio clave ha sido el de Anadu, Kruttli, McCabe y Osambela (2018), que examina cómo el cambio de estrategias de inversión activas a pasivas puede afectar la estabilidad financiera a través de su impacto en la liquidez de los fondos, la volatilidad del mercado de activos, la concentración en la industria de gestión de activos y la sincronicidad de los rendimientos. Por otra parte, el estudio ``The Hidden Power of the Big Three'' analiza la concentración de la propiedad corporativa y los nuevos riesgos financieros derivados de la gestión pasiva, proporcionando un contexto importante para este estudio.
+
+Otro estudio que ha tenido una influencia notable para el desarrollo de este trabajo ha sido ``What They Don't Tell You About Passive Investing'' (2017) de Ruchir Sharma, el cual incide en los riesgos de una burbuja en la inversión pasiva.
+
+El estudio de Gabaix y Koijen (2020) propone la hipótesis del mercado inelástico (``Inelastic Market Hypothesis''), la cual sugiere que los mercados no son perfectamente elásticos tal y como tradicionalmente se había pensado. Esta hipótesis es fundamental para entender cómo los flujos de capital hacia los ETFs pueden impactar de forma significativa las fluctuaciones del mercado. Este estudio, constituye la principal fuente de inspiración y motivación para la elección del tema de este trabajo, debido a la disrupción y relevancia de las conclusiones alcanzadas.
+
+En definitiva, todos los estudios mencionados, han jugado un papel clave a la hora de definir el foco y el alcance de este trabajo y por tanto requieren de especial atención y reconocimiento.
+
+\newpage
+
+% Contenido principal
+\section{Introducción}
+
+El mercado de la gestión de activos tradicionalmente ha tenido una vital importancia en las finanzas globales, tanto por la necesidad de los servicios que presta como por su capacidad de impacto en los mercados de valores. La capacidad de gestionar eficazmente los activos no solo contribuye a la estabilidad y el crecimiento económico, sino que también ofrece a los inversores la oportunidad de maximizar sus rendimientos mientras minimizan los riesgos. Como todas las industrias de impacto, la gestión de activos está en constante evolución y, especialmente durante las últimas dos décadas, ha experimentado grandes cambios. Uno de los fenómenos más destacables es el auge de la gestión pasiva, que está arrebatando cuota de mercado a la gestión activa a pasos agigantados. Dada la relevancia de este mercado y su capacidad de influir en la sociedad, es esencial seguir de cerca y analizar todos los cambios que en él se producen, con el objetivo de anticiparse a futuras consecuencias.
+
+La motivación detrás de este trabajo radica en la necesidad de explorar y comprender las tendencias emergentes, centrándose en los riesgos asociados con el auge de la gestión pasiva. Este es un tema muy popular con una gran diversidad de opiniones y argumentos encontrados. El debate establecido en términos académicos ha sido la principal fuente de inspiración y motivación para este estudio, que busca aportar una nueva perspectiva desde un punto de vista cuantitativo.
+
+\subsection*{Objetivos}
+
+El objetivo fundamental del trabajo es evaluar si la gestión pasiva representa una amenaza para la eficiencia de los mercados de renta variable, con un enfoque específico en el impacto de los ETFs de gestión pasiva sobre el índice S\&P 500. En base a este objetivo principal, se proponen los siguientes objetivos parciales:
+
+\begin{itemize}
+\item \textbf{Subobjetivo 1:} Evaluar la evolución de la sincronicidad de las acciones del S\&P 500 con respecto al índice durante el periodo comprendido entre 1998 y 2023. Este análisis busca identificar si ha habido un incremento en la sincronicidad de las acciones, lo cual podría indicar que se están moviendo de manera más uniforme y comprometiendo el proceso de descubrimiento de precios.
+
+\item \textbf{Subobjetivo 2:} Analizar la relación entre el porcentaje de propiedad de las grandes gestoras de fondos pasivos (Vanguard, BlackRock y State Street Global Advisors) y la sincronicidad de las acciones del S\&P 500. Este objetivo busca identificar si los cambios en la propiedad de estas gestoras están correlacionados con un incremento en la sincronicidad.
+
+\item \textbf{Subobjetivo 3:} Cuantificar el impacto de los flujos de capital hacia los ETFs de gestión pasiva sobre los rendimientos de las acciones dentro del índice S\&P 500. Este análisis tiene como fin determinar si estos flujos tienen una influencia significativa en los rendimientos de las acciones, afectando directamente sus valoraciones.
+
+\item \textbf{Subobjetivo 4:} Realizar un análisis sectorial para identificar qué sectores son más sensibles a los movimientos de capitales hacia ETFs de gestión pasiva. Este objetivo permitirá determinar si ciertos sectores del mercado de valores son más influenciados por la gestión pasiva que otros.
+\end{itemize}
+
+\subsection*{Metodología}
+
+Este trabajo tiene un enfoque cuantitativo de modo que todas las conclusiones estarán fundamentadas en el análisis de datos. A lo largo del capítulo 3, se expondrán todos los trabajos realizados y sus resultados. Las cuestiones planteadas se tratarán de responder mediante el planteamiento y la estimación de diferentes modelos estadísticos.
+
+Uno de los puntos clave a nivel metodológico es el análisis masivo de datos. Al poner el foco sobre el S\&P 500, por ser el índice más popular, el análisis involucra un número muy elevado de acciones. Este hecho, conlleva la necesidad de emplear herramientas de análisis avanzado para extraer, gestionar y procesar eficazmente la gran cantidad de información disponible. La inclusión de estas técnicas, aunque ha supuesto un nivel de complejidad adicional al trabajo, es fundamental para abordar el tema de estudio con mayor precisión.
+
+La herramienta clave empleada para el análisis de datos ha sido Python 3.10.12 en la plataforma Google Colab. El desarrollo de diferentes programas en Python, ha sido clave para llevar a cabo los análisis planteados, aprovechando la capacidad de Python de integrar fuentes de información externas mediante APIs.
+
+Aparte de Python ``core'' se han utilizado diversas librerías especializadas:
+
+\begin{itemize}
+\item \textbf{Pandas}: Se ha empleado para la manipulación y análisis de datos, permitiendo cargar, limpiar y organizar los datos extraídos de manera eficiente, siendo fundamental para manejar grandes volúmenes de información y realizar análisis descriptivos detallados.
+\item \textbf{Numpy}: Ha facilitado la implementación de cálculos y el procesamiento eficiente de datos numéricos.
+\item \textbf{Statsmodels}: Se utilizó para la estimación de los múltiples modelos estadísticos propuestos.
+\end{itemize}
+
+Por último, merece una especial mención la librería Yfinance, la cual ha sido la herramienta utilizada para acceder a los datos de la API de Yahoo Finance, facilitando la descarga masiva de datos históricos de precios y otros indicadores financieros, proporcionando la base necesaria para el análisis cuantitativo del estudio. Yfinance es una librería ``open-source'' desarrollada por Ran Aroussi, que permite hacer uso de las APIs públicas de Yahoo Finance por medio de múltiples funciones preconstruidas.
+
+\subsection*{Estructura}
+
+El análisis cuantitativo se divide en dos partes principales, cada una con un objetivo específico. La primera tiene como objetivo evaluar la evolución de la sincronicidad de las acciones con respecto al índice S\&P 500 a lo largo de las últimas décadas.
+
+\textbf{Hipótesis 1:} Existe un incremento en la sincronicidad de las acciones del S\&P 500 respecto al índice, lo cual sugiere que las acciones se mueven de manera más uniforme. Este comportamiento puede estar minimizando la percepción del riesgo idiosincrático y, en consecuencia, comprometiendo el proceso de descubrimiento de precios en los mercados.
+
+La segunda parte del estudio busca cuantificar el impacto de los flujos de capital hacia los ETFs de gestión pasiva sobre los rendimientos de las acciones dentro del mismo índice.
+
+\textbf{Hipótesis 2:} Los flujos de capital hacia los ETFs de gestión pasiva ejercen una influencia significativa en los rendimientos de las acciones del S\&P 500. Esta relación indica que la gestión pasiva podría estar afectando directamente las valoraciones de las acciones, impactando así en la estructura del mercado de valores.
+
+Ambas hipótesis se examinarán a través de un análisis cuantitativo riguroso, utilizando datos históricos del mercado y modelos estadísticos para evaluar las tendencias y correlaciones entre los movimientos de las acciones y los flujos de inversión hacia los ETFs de gestión pasiva. Este enfoque permitirá no solo confirmar o refutar las hipótesis propuestas, sino también obtener una visión contrastada acerca del impacto actual de la gestión pasiva en los mercados de renta variable.
+
+\newpage
+
+\section{El Mercado de la Gestión de Activos}
+
+Antes de desarrollar los análisis que tratarán de dar respuesta a la pregunta que plantea este trabajo, es crucial explicar el entorno en el que se desarrolla esta investigación. La gestión pasiva, tema nuclear de este estudio, es una parte de un ecosistema mucho mayor, el mercado de la gestión de activos. Este mercado es un componente esencial del sistema financiero global y se encarga de la administración profesional de activos propiedad de los clientes, que pueden ser individuos, empresas o instituciones. Los gestores de activos buscan maximizar los rendimientos de las inversiones y administrar el riesgo a través de diversas estrategias y enfoques de inversión.
+
+Los activos gestionados pueden incluir acciones, bonos, bienes raíces, commodities y otros instrumentos. La gran cantidad y variedad de inversores que demandan este tipo de servicios ha propiciado un desarrollo notable del abanico de estrategias, vehículos de inversión y productos ofrecidos por el mercado en las últimas décadas. Existen dos conceptos cruciales a la hora de abordar este trabajo, por un lado, los vehículos de inversión y, por otro lado, las estrategias de inversión.
+
+\subsection{Vehículos de Inversión}
+
+A grandes rasgos, los vehículos de inversión más populares en la industria se pueden dividir en dos grupos, los ``Hedge Funds'' y los ``Mutual Funds'', (Bodie, Kane, \& Marcus, 2021).
+
+En primer lugar, los ``Hedge Funds'' son fondos de inversión que buscan altos rendimientos utilizando estrategias complejas y de alto riesgo. A menudo, están disponibles solo para inversores acreditados debido a su alto nivel de riesgo y requisitos mínimos de inversión elevados. 
+
+Estos vehículos están sujetos a una regulación más laxa, permitiendo a sus gestores utilizar apalancamiento y ventas en corto con mayor libertad. Los gestores de estos fondos suelen invertir su propio dinero, alineando de esta forma sus intereses con los de los inversores. Los costes asociados a estos fondos suelen ser elevados, generalmente aplican la conocida como regla ``2 y 20'', que consiste en una tarifa de gestión del 2\% de los activos bajo gestión y un 20\% de las ganancias generadas.
+
+En segundo lugar, los ``Mutual Funds'' son vehículos de inversión colectiva que agrupan el dinero de muchos inversores para invertir en una cartera diversificada de valores. Están sujetos a una regulación mucho más restrictiva y suelen tener perfiles de riesgo más bajo. Existen tres tipos:
+
+Los ``Open-end Funds'', estos fondos permiten la compraventa de acciones a su valor neto de activos (NAV) al final de cada día de negociación. Estos fondos son muy líquidos, lo cual permite a los inversores negociar sin pagar grandes primas o descuentos. Como contrapartida, los altos niveles de liquidez pueden limitar la capacidad de los gestores para explotar oportunidades de inversión a largo plazo.
+
+Los ``Closed-end Funds'', a diferencia de los ``Open-end Funds'', emiten un número fijo de acciones que se negocian en mercados de valores. Los precios de las acciones de estos fondos pueden no coincidir con el NAV debido a la oferta y la demanda en el mercado secundario, lo cual genera oportunidades de arbitraje. Una característica común de estos fondos es el uso de apalancamiento, razón por la cual suelen ser instrumentos de mayor riesgo.
+
+Por último, Los ``Exchange Traded Funds'', popularmente conocidos como ETFs, son similares a los closed-end funds ya que se negocian en mercados de valores, pero tienen la capacidad de emitir y retirar acciones continuamente a través de participantes autorizados, lo cual contribuye a que los precios se desvíen del NAV. Los ETFs tienen un rol protagonista en este trabajo debido a su estrecha vinculación con la gestión pasiva. A menudo, se confunde el concepto de los ETFs con el de la gestión pasiva, la realidad es que el ETF es un vehículo de inversión, mientras que la gestión pasiva es una estrategia. La confusión generalizada proviene del hecho de que la gran mayoría (entorno al 94,07\%) de los ETFs disponibles en el mercado siguen una estrategia pasiva, tal y como se puede apreciar en la ilustración 1 (LSEG Lipper, 2023).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{assets/ilustracion_1.jpeg}
+\caption{Distribución del mercado de ETFs por estrategias de inversión}
+\label{fig:etf_distribution}
+\end{figure}
+
+Sin lugar a duda, el tándem conformado por los ETFs y la gestión pasiva ha marcado un antes y un después en la industria de la gestión de activos. Por un lado, los ETFs han facilitado el proceso de inversión mientras que la gestión pasiva ha demostrado generar rendimientos consistentes y ayudar los inversores particulares a gestionar el riesgo de sus inversiones, sin la necesidad de tener un conocimiento financiero profundo.
+
+\subsection{Estrategias de Inversión}
+
+El segundo concepto clave a la hora de abordar este trabajo son las estrategias de gestión. Los vehículos de inversión son una pieza clave para canalizar el ahorro de los inversores, sin embargo, de nada serviría la captación de fondos sin estrategias capaces de generar retornos consistentes a largo plazo. A grandes rasgos, estas estrategias se pueden dividir en las popularmente conocidas como gestión activa y gestión pasiva. A estas dos se ha unido una tercera estrategia que se sitúa a medio camino entre ambas, conocida como gestión factorial, la cual ha ganado una gran relevancia en los últimos años.
+
+La gestión activa ha sido tradicionalmente el estándar de la industria, bajo esta estrategia, los gestores seleccionan valores específicos con el objetivo de superar el rendimiento de un índice de referencia o ``benchmark''. Utilizan análisis fundamentales, técnicos y cuantitativos para identificar oportunidades de inversión. A pesar de su potencial para generar rendimientos superiores, la gestión activa suele implicar costes más altos debido a la frecuencia de las transacciones y al capital humano necesario para desarrollarlas. Además, la excepcional tendencia alcista que han seguido los mercados de valores estadounidenses tras la crisis de 2008, ha provocado una crisis sistémica para gestión activa, puesto que superar al mercado se ha convertido en un reto inalcanzable para muchos gestores, tal y como se puede apreciar en la ilustración 2. Según un estudio realizado en 2023, menos del 47\% de los gestores activos lograron superar a sus índices de referencia después de descontar las comisiones y otros costes (Morningstar, 2023).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{assets/ilustracion_2.jpeg}
+\caption{Comparación de rendimientos históricos entre fondos activos y pasivos}
+\label{fig:active_passive_performance}
+\end{figure}
+
+En contraste, la gestión pasiva, protagonista de este trabajo, busca replicar el rendimiento de un índice de mercado específico. Esta estrategia minimiza las transacciones y reduce notablemente el capital humano necesario para mantener en funcionamiento el fondo ya que el grado de automatización es muy elevado.
+
+Por último, la gestión factorial, combina elementos de las gestiones activa y pasiva, utilizando factores específicos como tamaño, valor, momentum y calidad para seleccionar inversiones. La gestión factorial se basa en modelos cuantitativos para identificar y explotar estos factores. Las cualidades de esta estrategia provocan que también sea altamente automatizable, lo cual contribuye a reducir los costes notablemente.
+
+\subsection{Orígenes y Evolución de la Gestión Pasiva}
+
+La gestión pasiva surgió en la década de 1970, cuando John Bogle, fundador de The Vanguard Group, diseñó el primer fondo indexado disponible para inversores individuales. En 1976, Bogle lanzó el Vanguard 500 Index Fund, que replicaba el S\&P 500. La idea detrás de este fondo era sencilla: en lugar de intentar seleccionar las mejores acciones, simplemente comprar todas las acciones del índice S\&P 500 y mantenerlas a largo plazo (CFA Institute, 2019).
+
+Desde su creación, la gestión pasiva ha evolucionado y ganado una enorme popularidad, especialmente en las últimas dos décadas. Los avances tecnológicos, la mayor transparencia en los mercados y la reducción de los costes de transacción han facilitado el acceso a los fondos indexados y a los ETFs. El contexto macroeconómico propiciado por las decisiones monetarias de los principales bancos centrales tras la crisis de 2008 ha creado el caldo de cultivo perfecto para la penetración de estos productos en el mercado.
+
+Otro motivo tras el éxito de la gestión pasiva ha sido la proliferación de la inversión ``retail'' en Estados Unidos, gracias a plataformas como RobinHood, un broker de muy bajas comisiones que se ha convertido en todo un fenómeno social. Estas plataformas han simplificado el proceso de inversión permitiendo a los clientes invertir desde sus teléfonos de una forma muy sencilla y asequible.
+
+El crecimiento de la gestión pasiva ha sido exponencial hasta el momento, durante el 2023, por primera vez en la historia, los activos gestionados por fondos mutuos pasivos han superado a los fondos gestionados activamente (CNBC, 2024).
+
+\subsection{El Impacto de la Gestión Pasiva en los Mercados Financieros}
+
+El auge de la gestión pasiva ha suscitado un amplio debate sobre su impacto en los mercados financieros. Mientras que algunos argumentan que los fondos indexados proporcionan una forma eficiente y barata de invertir, otros advierten sobre posibles riesgos, como la reducción en la eficiencia del mercado, la mayor volatilidad o la creación de burbujas valorativas.
+
+Sin ir más lejos, este fenómeno ya está teniendo notables consecuencias para el gobierno corporativo de las empresas. Las teorías de la conspiración sobre las tres grandes compañías comercializadoras de fondos (Blackrock, Vanguard y State Street), cada vez son más populares, fruto de la falta de educación financiera. Estas teorías surgen a raíz del hecho de que estas empresas tienen una participación superior al 20\% en el S\&P500. Como resultado, a nivel popular se piensa que las conocidas como las ``Big Three'' dominan el mundo. La realidad es que esos activos son propiedad de los inversores que compran los fondos de inversión.
+
+No obstante, hay una parte muy negativa y preocupante de esta situación, ya que los gestores de fondos pasivos a menudo tienen menos incentivos para involucrarse en la gestión y supervisión de estas empresas en comparación con los inversores activos. Esto podría llevar a una menor presión sobre las empresas para mejorar su desempeño y gobernanza. Además, este modelo implica una fuerte centralización del gobierno corporativo, lo cual podría tener un impacto muy negativo a largo plazo.
+
+Existen muchos otros riesgos asociados al predominio de la gestión pasiva, sin embargo, este estudio se va a centrar desde un punto de vista de la eficiencia de los mercados y las valoraciones de empresas. Durante los últimos años hemos escuchado en repetidas ocasiones a gestores legendarios como es el caso de Warren Buffet, quejarse de las dificultades que se están encontrando a la hora de generar valor para sus inversores empleando estrategias tradicionales basadas en el análisis fundamental de empresas. Recientemente, se han hecho muy virales las palabras pronunciadas por David Einhorn, gestor de Greenlight Capital, en el podcast ``Masters in Business'', donde lanzó la siguiente afirmación: ``Veo los mercados fundamentalmente rotos... Los inversores pasivos no tienen una opinión sobre el valor. Ellos van a asumir que todos los demás han hecho el trabajo.'' Con esta afirmación, el reputado gestor hace referencia a la entrada de agentes insensibles a los precios como los HFTs o los gestores pasivos, los cuales no realizan un análisis fundamental a la hora de operar.
+
+Lo cierto es que, tras las palabras de David Einhorn se esconde una realidad plausible, el auge de la gestión pasiva es innegable como se ha visto en apartados anteriores. Esto, evidentemente, tiene un impacto en el funcionamiento de los mercados financieros, debido a que la gestión pasiva es insensible a los precios, por lo que no contribuye al fenómeno tradicionalmente denominado como ``descubrimiento de precios''. Mediante este mecanismo, miles de inversores activos realizan valoraciones de compañías para comprar aquellas que a su juicio están infravaloradas y vender las sobrevaloradas.
+
+A menudo, el ser humano en contextos de euforia y desenfreno tiende a obviar los peligros de sus actos a cambio de beneficios efímeros. Por esta razón, la motivación de este estudio radica en ir más allá de este fenómeno en el que se encuentra sumergida la industria de la Gestión de Activos, con el objetivo de estimar los riesgos y el impacto que a día de hoy tiene la gestión pasiva sobre los mercados de renta variable.
+
+\newpage
+
+\section{Análisis Cuantitativo}
+
+Antes de comenzar con el análisis cuantitativo, es fundamental exponer las fuentes de datos empleadas y los criterios de selección utilizados. Esta sección proporciona una descripción detallada de las principales fuentes financieras consultadas y explica los criterios de inclusión y exclusión de datos que aseguran la precisión y relevancia de los resultados obtenidos.
+
+\subsection*{Fuentes de Datos}
+
+Los datos utilizados en este estudio provienen de dos principales fuentes financieras, Yahoo Finance y ETF.com. Yahoo Finance se ha utilizado para obtener datos históricos de cotizaciones y características de las diversas acciones analizadas. Esta plataforma es reconocida por su fiabilidad y accesibilidad, ofreciendo una gran multitud de métricas financieras de forma gratuita. La extracción de estos datos se llevó a cabo mediante la API de Yahoo Finance, accedida a través de la librería yfinance de Python. Esta herramienta ha sido clave a la hora de automatizar y simplificar el proceso de descarga de datos, permitiendo recopilar grandes volúmenes de información de manera eficiente y estructurada.
+
+Por otro lado, ETF.com se ha empleado como fuente de datos sobre los flujos monetarios hacia los ETFs mediante su herramienta fundflows. Esta plataforma es conocida por ofrecer información detallada sobre los fondos cotizados en bolsa (ETFs), incluyendo datos sobre los flujos de capital hacia y desde estos fondos. A través de ETF.com se han recopilado los datos de flujos de capital de los tres principales ETFs incluidos en la muestra del análisis: SPY, IVV y VOO. A partir de estos datos, se ha podido analizar cómo los flujos monetarios hacia estos ETFs influyen en los rendimientos de las acciones que componen el índice S\&P 500.
+
+Por último, los factores del modelo Fama-French utilizados en este estudio se han obtenido de la biblioteca de datos de Kenneth R. French.
+
+\subsection*{Criterios de Inclusión/Exclusión}
+
+A lo largo de este estudio se ha tratado de incluir el mayor número de datos a la hora de estimar los distintos modelos. El uso de herramientas de Big Data ha permitido maximizar las dimensiones de estos análisis. No obstante, para algunas variables se ha tenido que seleccionar una muestra debido a la dificultad de acceso a ciertos datos.
+
+Para el primer análisis se incluyeron todas las acciones que formaban parte del índice S\&P 500 durante el periodo de 1998 a 2023. Se han excluido aquellas acciones que no tenían datos completos disponibles para el periodo mencionado. Esto permite asegurar que los resultados obtenidos reflejan de manera precisa la evolución de la sincronicidad de las acciones con respecto al índice S\&P 500 a lo largo del tiempo.
+
+Para el segundo análisis se consideraron los flujos monetarios hacia los tres principales ETFs que replican el S\&P 500. La selección de estos tres ETFs se debe a su relevancia, ya que conjuntamente aglutinan una gran cuota del mercado de la gestión pasiva sobre el S\&P 500. También, la dificultad de acceder a todos los datos necesarios para el resto de ETFs explica la decisión de seleccionar una muestra reducida.
+
+Por último, cabe destacar que se ha puesto el foco en el mercado estadounidense y concretamente en el S\&P 500 debido a la gran penetración que tiene la gestión pasiva en este mercado y la disponibilidad de datos. El S\&P500 es uno de los índices más seguidos y utilizados en el mundo, y su relevancia en el contexto de la gestión pasiva lo convierte en un sujeto clave de estudio.
+
+\subsection{Análisis de la Evolución de la Sincronicidad entre Acciones}
+
+El objetivo de este análisis es evaluar cómo ha cambiado la sincronicidad de las acciones del S\&P 500 con respecto al índice durante el periodo comprendido entre el 1998 y el 2023. La sincronicidad se refiere a la medida en que los movimientos de los precios de las acciones individuales están alineados con los movimientos de su índice. Un aumento en la sincronicidad puede indicar que el mercado está infraestimando el riesgo idiosincrático de cada acción, lo que podría ser una consecuencia de la creciente influencia de la gestión pasiva.
+
+Para medir la sincronicidad, se utiliza un modelo de regresión lineal simple donde la variable dependiente es el rendimiento logarítmico de una acción individual y la variable independiente es el rendimiento logarítmico del índice S\&P 500. El coeficiente de determinación ($R^2$) del modelo se emplea como medida de sincronicidad: un $R^2$ más alto sugiere una mayor sincronicidad, implicando que las acciones se mueven con una mayor correlación hacia su índice.
+
+\subsubsection*{Introducción del modelo}
+
+El modelo propuesto para determinar la sincronicidad de una acción con respecto a su índice es el siguiente:
+
+\begin{equation}
+\log(Precio_i) = \alpha + \beta \cdot \log(Precio_{índice}) + \epsilon_i
+\end{equation}
+
+Donde:
+\begin{itemize}
+\item $\log(Precio_i)$ es la rentabilidad logarítmica de la acción $i$.
+\item $\log(Precio_{índice})$ es la rentabilidad logarítmica del índice S\&P 500.
+\item $\alpha$ es la constante del modelo.
+\item $\beta$ es el coeficiente que mide la sensibilidad de la acción a la rentabilidad del índice.
+\item $\epsilon_i$ es el término de error.
+\end{itemize}
+
+Para estimar el modelo, primero se han recopilado datos de rentabilidad tanto del índice como de cada uno de los componentes del S\&P 500 a lo largo del periodo de tiempo comprendido entre 1998 y 2023. Se ha calculado la rentabilidad logarítmica para cada acción y para el índice en cada año. A continuación, se ha estimado el modelo para cada una de las 500 acciones del índice en todos los años de la muestra. En total, se han estimado más de 10.000 modelos.
+
+Para cada modelo estimado se ha extraído el coeficiente de determinación ($R^2$). Este valor mide la proporción de la rentabilidad de una acción determinada que puede ser explicada por la rentabilidad del índice al que pertenece, en este caso el S\&P500. Un $R^2$ más alto indica una mayor sincronicidad, es decir, un mayor alineamiento de los movimientos de la acción con los movimientos del índice. Se ha calculado el promedio de los $R^2$ en cada año con el objetivo de obtener una medida de la sincronicidad promedio anual. Los resultados se presentan en la ilustración 3.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{assets/ilustracion_3.jpeg}
+\caption{Evolución de la sincronicidad en el S\&P500}
+\label{fig:synchronicity_evolution}
+\end{figure}
+
+Se observa una tendencia creciente en la sincronicidad de las acciones del S\&P 500 desde 1998 hasta 2023. Los picos más notables en los promedios anuales de sincronicidad se observan en los años 2008 (0.51) y 2020 (0.54), que coinciden con periodos de crisis. Esto sugiere que, durante las crisis, las acciones tienden a moverse de manera más sincronizada con el índice, lo cual coincide con el dictamen del sentido común ya que en periodos de crisis sistémica los inversores tienden a migrar su patrimonio desde la renta variable hacia vehículos de inversión más seguros como la renta fija. Este comportamiento se repite de forma conjunta independientemente de la acción en cuestión, aunque siempre hay sectores del mercado más afectados por las crisis.
+
+A simple vista, los resultados arrojados por este primer modelo no aportan una clara evidencia de que el auge de la gestión pasiva esté contribuyendo de forma directa a elevar los niveles de sincronicidad. Todo apunta a que la sincronicidad se ha incrementado con respecto a periodos pasados. No obstante, tal y como se ha mencionado anteriormente, la sincronicidad depende de multitud de variables, las crisis contribuyen a incrementarla, eventos macroeconómicos como subidas o bajadas de tipos de interés también juegan un papel crucial en la evolución de esta métrica. Por ello para determinar la relevancia de la gestión pasiva, es necesario estimar un nuevo modelo en el que se incluya una variable que refleje el auge de esta modalidad de inversión.
+
+La variable escogida para representar el auge de la gestión pasiva será la mediana del porcentaje de propiedad de las grandes comercializadoras de fondos de gestión pasiva en el S\&P 500. Las compañías consideradas en este análisis son Vanguard, BlackRock y State Street Global Advisors.
+
+El modelo propuesto tiene como objetivo explicar la variable sincronicidad en función del porcentaje de propiedad de las grandes gestoras en el S\&P 500. El modelo se formulará de la siguiente manera:
+
+\begin{equation}
+Sincronicidad = \alpha + \beta \cdot PROP + \epsilon_i
+\end{equation}
+
+Donde:
+\begin{itemize}
+\item Sincronicidad es la medida anual promedio de sincronicidad de las acciones del S\&P 500 (los $R^2$ promedios anuales estimados en el modelo anterior).
+\item PROP es el porcentaje de propiedad mediano combinado de Vanguard, BlackRock y State Street Global Advisors en el S\&P 500.
+\item $\alpha$ es la constante del modelo.
+\item $\beta$ es el coeficiente que mide la relación entre el porcentaje de propiedad y la sincronicidad.
+\item $\epsilon$ es el término de error.
+\end{itemize}
+
+El objetivo de este modelo es determinar si existe una relación significativa entre el aumento del porcentaje de propiedad de las grandes gestoras de fondos pasivos y la sincronicidad del S\&P 500. Un coeficiente $\beta$ positivo y significativo sugeriría que el aumento en la propiedad de estas empresas sobre el S\&P500 está relacionado con un incremento en la sincronicidad y por ende constituiría una evidencia de que el auge de la gestión pasiva tiene efectos en la variable analizada.
+
+A continuación, en las tablas 1 y 2 se recogen los estadísticos descriptivos de las dos variables utilizadas en el modelo junto con las correlaciones.
+
+% TABLA 1 CORREGIDA
+\begin{table}[H]
+\centering
+\caption{Estadísticos descriptivos de las variables Sincronicidad y PROP}
+\label{tab:descriptive_stats}
+\small
+\begin{tabular}{lcc}
+\toprule
+\textbf{Estadísticos} & \textbf{Propiedad} & \textbf{Sincronicidad} \\
+\textbf{Descriptivos} & \textbf{S\&P500 (\%)} & \textbf{Media S\&P500} \\
+\midrule
+Promedio & 14,64\% & 0,31 \\
+Desv. Estándar & 6,17\% & 0,12 \\
+Mínimo & 5,20\% & 0,08 \\
+25\% & 9,68\% & 0,23 \\
+Mediana & 13,90\% & 0,32 \\
+75\% & 19,63\% & 0,40 \\
+Máximo & 23,10\% & 0,57 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+La Tabla 1 presenta los estadísticos descriptivos de las variables ``Propiedad del S\&P 500 (\%)'' y ``Sincronicidad Media del S\&P 500''. Estos estadísticos proporcionan información clave para comprender la dinámica del mercado. Un aumento en la sincronicidad puede implicar que las acciones se mueven de manera más uniforme, lo que podría reducir la percepción del riesgo idiosincrático y afectar el descubrimiento de precios. En la tabla 2, se muestran las correlaciones entre la sincronicidad y el \% de propiedad de las ``Big Three'' sobre el S\&P 500.
+
+% TABLA 2 CORREGIDA
+\begin{table}[H]
+\centering
+\caption{Correlaciones entre las variables Sincronicidad y PROP}
+\label{tab:correlation}
+\small
+\begin{tabular}{lcc}
+\toprule
+\textbf{Correlaciones} & \textbf{Propiedad} & \textbf{Sincronicidad} \\
+ & \textbf{S\&P500 (\%)} & \textbf{Media S\&P500} \\
+\midrule
+Propiedad S\&P500 (\%) & 1 & 0,603 \\
+Sincronicidad Media S\&P500 & 0,603 & 1 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Es importante destacar que este análisis se realiza en un contexto complejo, ya que existen infinitos factores que influyen en la sincronicidad. La inclusión del porcentaje de propiedad como variable independiente permite aislar el impacto de la gestión pasiva, aunque no debe interpretarse como el único determinante de la sincronicidad, tampoco cabe esperar que esta variable de forma independiente arroje un alto poder explicativo.
+
+En la tabla 3 se presentan los resultados del modelo estimado.
+
+\begin{table}[H]
+\centering
+\caption{Resultados del Modelo de Sincronicidad univariante}
+\label{tab:regression_results}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Variable} & \textbf{Coeficiente} & \textbf{t} & \textbf{$P>\vert t\vert$} \\
+\midrule
+Constante & 0,174 & 2,576 & 0,017 \\
+PROP & 0,932 & 2,097 & 0,047 \\
+\midrule
+\multicolumn{4}{l}{\textit{Estadísticas del Modelo}} \\
+\midrule
+R-cuadrado & \multicolumn{3}{l}{0,155} \\
+R-cuadrado ajustado & \multicolumn{3}{l}{0,12} \\
+Estadístico F & \multicolumn{3}{l}{4,396} \\
+Prob (Estadístico F) & \multicolumn{3}{l}{0,0467} \\
+Log-verosimilitud & \multicolumn{3}{l}{18,381} \\
+Durbin-Watson & \multicolumn{3}{l}{1,307} \\
+Estadístico de Jarque-Bera (JB) & \multicolumn{3}{l}{0,921} \\
+Prob (JB) & \multicolumn{3}{l}{0,631} \\
+Asimetría (Skew) & \multicolumn{3}{l}{0,39} \\
+Curtosis (Kurtosis) & \multicolumn{3}{l}{2,51} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Los resultados del modelo arrojan muchos datos interesantes, en primer lugar, se puede afirmar que el modelo es estadísticamente significativo. Además, el coeficiente de determinación ($R^2$) es de 0.155, lo cual indica que aproximadamente el 15,5\% de la variabilidad en la sincronicidad puede ser explicada por el porcentaje de propiedad de las grandes gestoras en el S\&P 500. Este valor no es particularmente alto, hecho que está alineado con la idea de que existen muchos factores que determinan la sincronicidad y por tanto la capacidad explicativa de un modelo univariable es limitada.
+
+El coeficiente del porcentaje de propiedad sobre el S\&P 500 es de 0.9324, lo que indica que, en promedio, un aumento en el porcentaje de propiedad de las grandes gestoras está asociado con un aumento en la sincronicidad de las acciones del S\&P 500. Además, el p-valor asociado a este coeficiente es de 0.047, lo que implica que se trata de una variable significativa empleando un nivel de confianza del 95\%.
+
+En conclusión, los resultados del modelo sugieren que existe una relación positiva y estadísticamente significativa entre el porcentaje de propiedad de las grandes gestoras de fondos de gestión pasiva y la sincronicidad de las acciones del S\&P500. Esto va en línea con la hipótesis inicial de que la gestión pasiva contribuye a este fenómeno. Sin embargo, el $R^2$ relativamente bajo refleja que hay otros factores importantes que también influyen en la sincronicidad, los cuales no se han tenido en cuenta en el modelo propuesto.
+
+Por último, si bien es cierto que existen evidencias consistentes para determinar la significancia estadística de la variable \% de propiedad sobre el S\&P500, es importante destacar que el periodo recogido comprende unos años muy convulsos para el mundo financiero, primero la burbuja de las .com, seguido de la Gran Crisis del 2008 o la crisis derivada del Covid-19. Todos estos elementos pueden provocar distorsiones a la hora de realizar un análisis de esta tipología y para tener una respuesta clara a la hipótesis inicial convendría analizar la evolución del modelo propuesto en los años venideros.
+
+\subsection{Análisis del Impacto de los Flujos Monetarios hacia ETFs de Gestión Pasiva en las Valoraciones del S\&P500}
+
+Tras llevar a cabo un primer análisis cuantitativo sobre el efecto de la gestión pasiva en la sincronicidad de las acciones del S\&P 500, toca extender el análisis. Para ello, es necesario profundizar en otro aspecto crucial del mercado: la negociación de las acciones y la formación de precios. La creciente popularidad de los ETFs pasivos, tiene el potencial de cambiar radicalmente algunos mecanismos que tradicionalmente han operado en los mercados financieros. El análisis anterior, se ha centrado en la propiedad de las grandes gestoras de fondos pasivos como ``proxy'' del auge de esta modalidad de inversión. Para este segundo análisis se tomarán como referencia los flujos monetarios hacia los ETFs pasivos.
+
+El objetivo es determinar si los flujos de capital tienen un impacto significativo en los rendimientos de las acciones del S\&P 500. Este enfoque complementará nuestro análisis previo sobre la sincronicidad, proporcionando una visión más completa de cómo la gestión pasiva puede influir en la estructura y el comportamiento del mercado.
+
+Es importante, contextualizar este análisis en el marco de la ``Inelastic Market Hypothesis'' (Xavier Gabaix y Ralph Koijen, 2020), anteriormente mencionada. En base a esta teoría, se puede inferir que los flujos de capital hacia los ETFs pasivos tienen el potencial de tener un impacto desproporcionado en los precios de las acciones, incrementando su valoración más allá de lo que justificarían los fundamentales económicos. Esto se debe a la limitada capacidad del mercado para absorber cambios en la demanda sin grandes fluctuaciones en los precios.
+
+Antes de introducir el modelo empleado para este estudio, es importante destacar que la dificultad y coste de acceso a datos financieros ha sido un factor influyente, por este motivo la estrategia de recolección de datos se ha centrado en optimizar la relevancia de los datos en relación con su coste de obtención. Los datos más complejos de obtener han sido los flujos monetarios hacia los fondos de gestión pasiva. Para simplificar la tarea, se ha optado por recopilar datos sobre los 3 principales ETFs que tratan de replicar el S\&P 500, estos son: SPDR S\&P 500 ETF Trust (SPY), iShares Core S\&P 500 ETF (IVV) y Vanguard S\&P 500 ETF (VOO).
+
+\textbf{SPDR S\&P 500 ETF Trust (SPY)}
+
+Este producto, lanzado el 22 de enero de 1993 por State Street Global Advisors, es el ETF más antiguo y uno de los más populares para replicar el S\&P 500. En mayo de 2024, gestiona aproximadamente \$533 mil millones en activos. Su ratio de gasto es del 0.09\%. Su longevidad e intachable trayectoria a la hora de replicar las rentabilidades del S\&P 500, lo convierten en uno de los fondos indexados más populares del mercado.
+
+\textbf{iShares Core S\&P 500 ETF (IVV)}
+
+El iShares Core S\&P 500 ETF, lanzado el 15 de mayo de 2000 por BlackRock, es otro ETF popular para replicar el S\&P 500. Gestiona alrededor de \$464.3 mil millones en activos. Este ETF es conocido por su bajo ratio de gastos del 0.03\%, lo que lo hace muy atractivo para los inversores a largo plazo, probablemente este sea uno de los principales motivos que explican su éxito.
+
+\textbf{Vanguard S\&P 500 ETF (VOO)}
+
+El último ETF incluido en la muestra, fue lanzado el 7 de septiembre de 2010 por Vanguard. Actualmente gestiona \$455.4 mil millones en activos. Al igual que el (IVV) posee un ratio de gastos del 0.03\%.
+
+% TABLA 4 CORREGIDA
+\begin{table}[H]
+\centering
+\caption{Características de los ETFs seleccionados para la muestra}
+\label{tab:etf_characteristics}
+\small
+\begin{tabular}{lccc}
+\toprule
+\textbf{Símbolo} & \textbf{Nombre del ETF} & \textbf{Clase de} & \textbf{Activos Totales} \\
+ & & \textbf{Activo} & \textbf{(\$MM)} \\
+\midrule
+SPY & SPDR S\&P 500 ETF Trust & Renta Variable & \$533,178 \\
+IVV & iShares Core S\&P 500 ETF & Renta Variable & \$464,283 \\
+VOO & Vanguard S\&P 500 ETF & Renta Variable & \$455,444 \\
+\midrule
+\textbf{Total} & - & - & \textbf{\$1,452,905} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Como se puede apreciar en la tabla 4, los tres fondos unidos gestionan en torno a 1,5 billones de dólares en activos del S\&P 500, lo cual representa aproximadamente el 30\% del total de activos gestionados pasivamente en el S\&P 500 (Axios, 2021). Este volumen supone una cantidad representativa del mercado, no obstante, hay que tener en cuenta que una mayor inclusión de datos tiene el potencial de mejorar la precisión de este análisis.
+
+\subsubsection*{Introducción del modelo}
+
+Para desarrollar el análisis se ha empleado un modelo basado en el conocido Fama-French de tres factores semanal, pero con una modificación clave: la incorporación de un nuevo factor que incluye la variación de los flujos monetarios netos hacia los ETFs de gestión pasiva. El modelo Fama-French de tres factores es una herramienta ampliamente utilizada en finanzas para explicar los rendimientos de las acciones. Este modelo extiende el Capital Asset Pricing Model (CAPM) al incluir dos factores adicionales: la prima de rentabilidad de las acciones pequeñas con respecto a las grandes (SMB) y la prima en la rentabilidad de las empresas ``value'' con respecto a las ``growth'' (HML). Estos factores ayudan a capturar las variaciones en los rendimientos que no pueden ser explicadas solo por el rendimiento del mercado.
+
+En el modelo propuesto se ha incluido un cuarto factor que representa la variación de los flujos monetarios netos hacia los ETFs de gestión pasiva. Este factor adicional nos permite investigar si los flujos de capital hacia estos ETFs tienen un impacto directo en los rendimientos de las acciones del S\&P 500.
+
+A continuación, se expone el modelo estimado:
+
+\begin{equation}
+R_i - R_f = \alpha + \beta_1(R_m - R_f) + \beta_2 SMB + \beta_3 HML + \beta_4 \Delta Flujos + \epsilon_i
+\end{equation}
+
+Donde:
+\begin{itemize}
+\item $R_i$ es el rendimiento de la acción $i$.
+\item $R_f$ es la tasa libre de riesgo.
+\item $R_m$ es el rendimiento del mercado.
+\item SMB (Small Minus Big) es la diferencia de rendimientos entre una cartera de pequeñas empresas y una de grandes empresas.
+\item HML (High Minus Low) es la diferencia de rendimientos entre una cartera de empresas ``Value'' y una con empresas ``Growth''.
+\item $\Delta Flujos$ es la variación de los flujos netos hacia los ETFs de gestión pasiva, nuestro nuevo factor.
+\item $\alpha$ es el intercepto del modelo.
+\item $\epsilon_i$ es el término de error del modelo.
+\end{itemize}
+
+La incorporación del factor de variación de flujos hacia los ETFs de gestión pasiva permite aislar el efecto de estos flujos en los rendimientos de las acciones, más allá de los factores tradicionales de mercado, tamaño y valor. De esta manera, se busca determinar si la gestión pasiva está influyendo directamente en las valoraciones de las acciones del S\&P 500.
+
+El primer paso de este estudio consistirá en estimar el modelo para todas las acciones del S\&P 500 durante el periodo de 2020 a 2023. Se ha escogido este periodo debido a la disponibilidad de datos y por tratarse de un periodo en el que se experimentó un ``boom'' en la gestión pasiva tras la pandemia. Durante estos años, se ha observado un notable incremento en la adopción de ETFs de gestión pasiva, lo cual justifica el enfoque en este intervalo temporal. La ilustración 4 de Blackrock muestra el vertiginoso ascenso del mercado de los ETFs durante el periodo analizado.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{assets/ilustracion_4.jpeg}
+\caption{Evolución de los activos gestionados por ETFs}
+\label{fig:etf_growth}
+\end{figure}
+
+La frecuencia de los datos empleados es semanal. Esta elección se debe a que una ventana temporal semanal es lo suficientemente amplia para que el efecto de los flujos monetarios se haga efectivo a nivel de impacto en las negociaciones bursátiles. Al mismo tiempo, permite obtener una muestra grande de datos, lo cual es esencial para la fiabilidad del análisis estadístico.
+
+El propósito de este primer paso es analizar a gran escala para qué acciones, los flujos monetarios tienen un efecto significativo en las rentabilidades. Identificar las acciones que muestran una sensibilidad significativa a los flujos de capital hacia los ETFs de gestión pasiva es un paso crucial para entender el alcance y la naturaleza del impacto de estos flujos en el mercado de valores.
+
+Una vez determinadas las acciones para las cuales los flujos monetarios son significativos en sus rentabilidades, se procederá a analizarlas realizando una comparación de diferentes métricas con respecto a la media del S\&P 500. Finalmente, se llevará a cabo un análisis sectorial para identificar los sectores del mercado más influenciados por este fenómeno.
+
+\subsubsection*{Comparación de los modelos de 3 y 4 factores}
+
+Tras esta breve introducción a la estructura del análisis, primero se estimará el modelo Fama-French de tres factores para todas las acciones del S\&P 500 durante el periodo de 2020 a 2023 junto con el modelo de 4 factores. El propósito de este primer paso es evaluar el ajuste medio del modelo y obtener una idea de la capacidad explicativa del modelo base, sin la incorporación del cuarto factor. Posteriormente se compararán los $R^2$ promedios de ambos modelos para recopilar los cambios en el poder explicativo.
+
+El análisis inicial utilizando el modelo Fama-French de tres factores proporciona un $R^2$ promedio de 0.50 para las acciones del S\&P 500 durante el periodo de 2020 a 2023. Este valor de $R^2$ indica que, en promedio, el 50\% de la variabilidad en los rendimientos de las acciones puede ser explicada por los tres factores tradicionales del modelo.
+
+Al incorporar el cuarto factor, que incluye la variación de los flujos monetarios netos hacia los ETFs de gestión pasiva, el $R^2$ promedio de los modelos aumenta a 0.59. Esto significa que el 59\% de la variabilidad en los precios de las acciones puede ser explicada cuando se incluye este nuevo factor en el modelo.
+
+Estos resultados, implican un incremento del 17\% en el poder explicativo del modelo de 4 factores con respecto al modelo de 3 factores, por ende, se puede inferir que la inclusión del factor de flujos monetarios mejora significativamente el poder explicativo del modelo en términos generales.
+
+\subsubsection*{Análisis individualizado del modelo de 4 factores}
+
+Una vez realizada esta primera aproximación general al modelo, la cual permite evaluar si la variable de flujos monetarios tiene potencial explicativo, es hora de examinar los resultados del estudio de forma individualizada acción por acción. Para ello, se va a recurrir a los resultados del modelo de 4 factores estimado en el paso anterior.
+
+Lo primero a destacar es el número de modelos globalmente significativos, de acuerdo con los resultados del p-valor del estadístico F, con un nivel de confianza del 95\% se puede afirmar que para 492 acciones de las 496 analizadas, el modelo es estadísticamente significativo.
+
+Estos resultados indican que el modelo propuesto tiene un poder explicativo notable. No obstante, lo importante de este estudio es analizar el comportamiento de la variable $\Delta Flujos$. Tal y como se ha explicado anteriormente, la variable $\Delta Flujos$ representa la variación de los flujos monetarios netos hacia los 3 ETFs incluidos en la muestra, por tanto, si esta variable incluida en el modelo Fama-French de tres factores es significativa, se podrá afirmar que, para la acción analizada, el efecto de los flujos monetarios es significativo.
+
+Tras analizar los P-valores de los modelos estimados para las 496 acciones, se puede afirmar con un nivel de confianza del 95\%, que la variable $\Delta Flujos$ es significativa para 36 acciones. A continuación, se va a presentar la tabla 5 con las acciones resultantes.
+
+\begin{table}[H]
+\centering
+\caption{Acciones significativamente impactadas por los flujos monetarios de ETFs}
+\label{tab:significant_stocks}
+\footnotesize
+\begin{tabular}{p{1.5cm}p{6cm}p{2cm}p{1.5cm}}
+\toprule
+\textbf{Ticker} & \textbf{Nombre} & \textbf{P-valor fundflows} & \textbf{$R^2$} \\
+\midrule
+ABBV & AbbVie Inc. & 0,0274 & 0,3506 \\
+ACN & Accenture plc & 0,0023 & 0,6679 \\
+ADM & Archer-Daniels-Midland Company & 0,0483 & 0,5468 \\
+ALLE & Allegion plc & 0,0465 & 0,6059 \\
+AMP & Ameriprise Financial, Inc. & 0,0065 & 0,8030 \\
+AMT & American Tower Corporation & 0,0221 & 0,4705 \\
+ANSS & ANSYS, Inc. & 0,0376 & 0,6490 \\
+AOS & A. O. Smith Corporation & 0,0340 & 0,5369 \\
+BAC & Bank of America Corporation & 0,0174 & 0,7892 \\
+CCI & Crown Castle Inc. & 0,0158 & 0,4038 \\
+CLX & The Clorox Company & 0,0430 & 0,1158 \\
+CMCSA & Comcast Corporation & 0,0388 & 0,4341 \\
+CNC & Centene Corporation & 0,0034 & 0,3434 \\
+COR & Cencora, Inc. & 0,0015 & 0,3578 \\
+COST & Costco Wholesale Corporation & 0,0216 & 0,4360 \\
+CSCO & Cisco Systems, Inc. & 0,0300 & 0,3896 \\
+DLR & Digital Realty Trust, Inc. & 0,0171 & 0,3431 \\
+FAST & Fastenal Company & 0,0254 & 0,5960 \\
+GEN & Gen Digital Inc. & 0,0164 & 0,1699 \\
+IEX & IDEX Corporation & 0,0456 & 0,6008 \\
+JKHY & Jack Henry \& Associates, Inc. & 0,0092 & 0,3673 \\
+JPM & JPMorgan Chase \& Co. & 0,0036 & 0,7744 \\
+LUV & Southwest Airlines Co. & 0,0478 & 0,5653 \\
+MCK & McKesson Corporation & 0,0096 & 0,3265 \\
+META & Meta Platforms, Inc. & 0,0378 & 0,3475 \\
+MOH & Molina Healthcare, Inc. & 0,0114 & 0,3076 \\
+MSI & Motorola Solutions, Inc. & 0,0455 & 0,4939 \\
+NCLH & Norwegian Cruise Line Holdings Ltd. & 0,0024 & 0,5604 \\
+NKE & NIKE, Inc. & 0,0486 & 0,5287 \\
+NWSA & News Corporation & 0,0487 & 0,5089 \\
+QRVO & Qorvo, Inc. & 0,0470 & 0,5140 \\
+RCL & Royal Caribbean Cruises Ltd. & 0,0407 & 0,5900 \\
+SWKS & Skyworks Solutions, Inc. & 0,0197 & 0,5888 \\
+TRGP & Targa Resources Corp. & 0,0085 & 0,5739 \\
+UNH & UnitedHealth Group Incorporated & 0,0160 & 0,4840 \\
+WYNN & Wynn Resorts, Limited & 0,0093 & 0,5332 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+En base a estos resultados, el total de acciones para las cuales los flujos de capitales representan un impacto directo y sostenido en sus rentabilidades a lo largo de los últimos cuatro años representa el 7,3\% del S\&P 500.
+
+Estos resultados sugieren que, aunque los flujos de capital hacia los ETFs de gestión pasiva tienen un efecto notable en ciertas acciones, este impacto es asimétrico a lo largo del índice. Las acciones que muestran una sensibilidad significativa son aquellas que, por diversas razones, pueden estar más expuestas a los flujos de capital, lo que puede deberse a factores como su tamaño, sector, liquidez y volatilidad, entre otros. En las próximas páginas se tratará de buscar ciertos patrones comunes a estas empresas con el objetivo de desarrollar una visión clara de cuáles pueden ser los factores que propicien una mayor sensibilidad hacia los movimientos de capitales y de este modo poder anticipar la evolución de este fenómeno.
+
+Antes de analizar las empresas resultantes, es importante prestar atención a los resultados de los coeficientes de la variable $\Delta Flujos$, para poder entender mejor los efectos en las cotizaciones. Como se puede apreciar en la ilustración 5, salvo en una minoría de casos, los coeficientes son grandes y positivos. Este patrón sugiere que las entradas netas de capital hacia los ETFs de gestión pasiva tienen un impacto significativo y positivo en los rendimientos de las acciones del S\&P 500 que son sensibles a estos flujos.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{assets/ilustracion_5.jpeg}
+\caption{Coeficientes significativos de la variable $\Delta$Flujos}
+\label{fig:flow_coefficients}
+\end{figure}
+
+Estos resultados apuntan directamente a la anteriormente mencionada ``Inelastic Market Hypothesis''. En un mercado inelástico, un aumento en la demanda de acciones (por ejemplo, a través de flujos de capital hacia ETFs de gestión pasiva) puede provocar aumentos significativos en los precios de las acciones porque no hay suficiente liquidez para absorber la demanda adicional sin un ajuste de precios.
+
+Los coeficientes estimados, al ser significativos y positivos en su mayoría, sugieren que estas acciones tienen una alta sensibilidad a la demanda adicional creada por los flujos hacia los ETFs. Esto implica que el mercado no puede absorber completamente estos flujos sin que se produzcan variaciones significativas en los precios de las acciones. En otras palabras, los flujos de capital hacia los ETFs de gestión pasiva están teniendo un impacto considerable sobre los precios de ciertas acciones.
+
+La presencia de algunos coeficientes negativos también es relevante. Aunque son muy poco frecuentes, indican que, para ciertas acciones, los flujos hacia los ETFs pueden tener un efecto adverso. Esto podría deberse a factores específicos de esas acciones o a dinámicas particulares de mercado que hacen que reaccionen de manera diferente a los flujos de capital. Esto constituye otra línea de investigación a futuro muy interesante.
+
+En conclusión, los resultados obtenidos apoyan la ``Inelastic Market Hypothesis'' al mostrar que los flujos de capital hacia los ETFs de gestión pasiva tienen un impacto significativo y positivo en los precios de las acciones. Esto es una muestra de inelasticidad del mercado, lo que significa que flujos relativamente pequeños de capital pueden tener efectos relevantes sobre los precios. Además, los resultados verifican la hipótesis inicial al demostrar que los precios de determinadas acciones se están viendo influidos por los flujos monetarios hacia instrumentos de gestión pasiva.
+
+\subsubsection*{Análisis de las acciones para las cuales el impacto de los flujos es significativo}
+
+Una vez recopilada la lista de las 36 acciones del S\&P 500 para las cuales los flujos monetarios hacia ETFs tienen un impacto significativo, es hora de analizar este conjunto de acciones y compararlas con el resto del índice para ver qué caracteriza a estas empresas.
+
+Se analizarán aspectos como la capitalización de mercado, el sector al que pertenecen, el volumen y la volatilidad de las acciones. El objetivo es crear un perfil detallado de sobre qué acciones se ven más afectadas por el fenómeno estudiado.
+
+\textbf{Tamaño}
+
+Para comenzar el análisis, se va a examinar el tamaño de las acciones sensibles a los flujos monetarios hacia los ETFs en comparación con el promedio del S\&P 500. Para ello se empleará la capitalización de mercado como métrica de referencia. Este factor es el que más potencial tiene para determinar qué acciones son más sensibles, por un motivo que se explicará en el próximo párrafo. Las 36 acciones que muestran una sensibilidad significativa a estos flujos tienen una capitalización de mercado promedio de \$130 mil millones. En contraste, la media de capitalización de mercado del S\&P 500 es de \$97 mil millones. Esto implica que, en promedio, las 36 acciones analizadas son un 34\% más grandes en términos de capitalización de mercado que la media del S\&P 500.
+
+Este resultado sugiere que las acciones que son más sensibles a los flujos de capital hacia los ETFs tienden a ser de mayor tamaño. Las empresas con mayor capitalización de mercado pueden atraer más flujos de los fondos de gestión pasiva debido a que su peso relativo en el índice es superior, lo cual puede explicar su mayor sensibilidad a los flujos de ETFs.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{assets/ilustracion_6.jpeg}
+\caption{Comparación de las 36 acciones con el promedio del S\&P500}
+\label{fig:comparative_metrics}
+\end{figure}
+
+En la ilustración 6 se puede ver un resumen de las principales métricas promedio de la cesta de 36 acciones frente al promedio del S\&P 500. Comenzando con los múltiplos de valoración, el ratio precio/valor contable (Price/Book ratio) promedio de las 36 acciones sensibles a los flujos monetarios hacia los ETFs es de 17, mientras que la media del S\&P 500 es de 11. Esto implica una diferencia del 54\%. Habitualmente, un ratio más elevado está asociado a empresas de mayor crecimiento o con grandes expectativas de rendimiento a futuro. El ratio P/E no muestra una diferencia relevante con respecto a la media del S\&P 500.
+
+La rentabilidad por dividendo, la Beta y la volatilidad, no presentan diferencias notables con respecto a la media del S\&P 500.
+
+La métrica EV y el volumen diario parecen estar alineadas con lo concluido en el análisis del tamaño puesto que ambas muestran una diferencia de tamaño considerable en favor del grupo de 36 acciones.
+
+Por último, el porcentaje de propiedad por parte de las tres grandes gestoras de fondos de gestión pasiva (BlackRock, Vanguard y State Street) es mayor en las 36 acciones (26\%) en comparación con el promedio del S\&P 500 (23\%). Este resultado es muy coherente con el análisis realizado en el apartado anterior y del que se puede intuir que una mayor presencia de actores insensibles a los precios genera que nuevos flujos de capital, los cuales incrementen la demanda del activo, tengan un impacto mayor en los precios.
+
+\textbf{Distribución Sectorial}
+
+Para finalizar el análisis de estas 36 acciones resultantes, se van a recopilar todos los sectores a los que pertenecen. Esta clasificación se ha obtenido a través de Yahoo Finance API. En la ilustración 7, se muestra la distribución sectorial de las 36 acciones. El sector de servicios de comunicación y nuevas tecnologías parece ser el más repetido entre las acciones, seguido del sector salud y consumo cíclico.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{assets/ilustracion_7.jpeg}
+\caption{Distribución sectorial de las 36 acciones}
+\label{fig:sector_distribution}
+\end{figure}
+
+Por sí solos, estos resultados no implican nada puesto que no constituyen ninguna evidencia de que el sector pueda ser un factor determinante en la sensibilidad de las acciones hacia los movimientos de capitales en los ETFs de gestión pasiva.
+
+\subsubsection*{Reestimación del Modelo Fama-French de 4 Factores por Sectores}
+
+La última parte del análisis cuantitativo va a consistir en un análisis sectorial, esta sección tiene el objetivo de recopilar información acerca de qué sectores son más sensibles a los movimientos de capitales hacia ETFs de gestión pasiva. Esto puede ser de gran utilidad para todos los inversores que sigan estrategias de análisis fundamental, a quienes les interesa que el mercado no esté distorsionado por agentes insensibles a los precios.
+
+Para ello, se reestimará el modelo de cuatro factores aplicándolo por sectores en lugar de acciones individuales. Para este análisis, se utilizarán las rentabilidades ponderadas por la capitalización de mercado de cada empresa dentro de cada sector.
+
+En la tabla 6 se pueden observar los resultados de los modelos estimados. Cabe mencionar que estos resultados no tienen por qué estar alineados con la distribución sectorial de las 36 acciones, puesto que estos se han calculado, teniendo en cuenta todo un sector en su conjunto y la distribución sectorial únicamente hace referencia a las acciones calificadas como sensibles a los flujos monetarios.
+
+\begin{table}[H]
+\centering
+\caption{Resultados de modelo Fama-French de 4 factores sectorial}
+\label{tab:sector_results}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Sector} & \textbf{coef\_flujos} & \textbf{pvalor\_flujos} & \textbf{$R^2$} \\
+\midrule
+Consumo Cíclico & -0,0459 & 0,5795 & 0,8825 \\
+Materiales Básicos & 0,07 & 0,4281 & 0,8393 \\
+Salud & 0,18 & 0,0416 & 0,6974 \\
+Tecnología & -0,0471 & 0,4594 & 0,9072 \\
+Servicios Financieros & 0,1268 & 0,0407 & 0,9199 \\
+Consumo Defensivo & 0,0334 & 0,6817 & 0,6686 \\
+Bienes Raíces & 0,1922 & 0,1139 & 0,7283 \\
+Energía & -0,041 & 0,829 & 0,6611 \\
+Medios de Comunicación & -0,0918 & 0,444 & 0,6642 \\
+Industriales & 0,119 & 0,08 & 0,9 \\
+Servicios & -0,0121 & 0,9286 & 0,5837 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Estos resultados revelan que únicamente dos sectores se ven significativamente impactados de forma conjunta por los flujos monetarios a nivel de rentabilidad de las acciones. En primer lugar, el sector salud, con un p-valor de 0.0412 y un coeficiente de flujos de 0.18 indica que los flujos de capital hacia los ETFs tienen un impacto significativo y positivo en los rendimientos de las acciones del sector salud.
+
+En el sector de servicios financieros, el p-valor de 0.0497 sugiere que la variable es significativa. A su vez el coeficiente de flujos es de 0.1268, mostrando de nuevo una relación positiva significativa al igual que en el sector salud. Para el resto de los sectores, no podemos afirmar que, de manera conjunta, los flujos de capital hacia ETFs de gestión pasiva tengan un impacto directo significativo en las cotizaciones.
+
+Algo que sí conviene destacar es el hecho de que ambos coeficientes significativos sean positivos, reafirmando la idea de que la entrada de capitales en el mercado de gestión pasiva tiene un impacto positivamente correlacionado en las cotizaciones de determinadas acciones.
+
+En conclusión, si bien parece que existen algunos sectores que son más sensibles a estos flujos monetarios, es importante tener en mente que esto no implica causalidad, de hecho, intuitivamente se puede deducir que el sector al que pertenece una acción es irrelevante para los fondos de gestión pasiva ya que estos no tienen preferencia por unos sectores u otros, simplemente replican la distribución del mercado. Lo que sí se puede afirmar es que existe una concentración de acciones con una mayor sensibilidad al fenómeno analizado, en determinados sectores.
+
+\newpage
+
+\section{Conclusiones}
+
+El presente trabajo ha explorado en profundidad si la gestión pasiva podría representar una amenaza para la eficiencia de los mercados de renta variable, centrándose específicamente en el impacto de los ETFs de gestión pasiva en las valoraciones del índice S\&P 500. Los hallazgos obtenidos son significativos y ofrecen una visión detallada sobre el estado actual de este fenómeno.
+
+A lo largo del estudio se ha identificado una tendencia ascendente en la sincronicidad de las acciones del S\&P 500 desde 1998 hasta 2023, con aumentos particularmente notables durante los periodos de crisis, como en 2008 y 2020. Además, se ha podido concluir que este incremento está en cierta medida relacionado con el auge de la gestión pasiva, este hallazgo es muy significativo debido a sus implicaciones. Una sincronicidad creciente sugiere que las valoraciones y los rendimientos de las compañías cada vez reflejan menos sus características idiosincráticas, lo cual supone una amenaza para el mecanismo de descubrimiento de precios. Si la tendencia observada en este estudio continúa a lo largo de los próximos años, el fenómeno descrito tendría un efecto muy negativo en la eficiencia de los mercados de renta variable.
+
+La segunda parte del análisis cuantitativo ha desvelado que los flujos monetarios hacia ETFs pasivos tienen un impacto significativo y positivo en la mayoría de casos, especialmente en acciones con mayor capitalización de mercado y en sectores específicos como el de salud y servicios financieros. Este hallazgo va en línea con los resultados de la primera parte y sugiere que, a día de hoy, la gestión pasiva ya tiene un impacto significativo en las valoraciones de ciertas acciones. Este fenómeno tiene de nuevo un impacto negativo en términos de eficiencia puesto que los flujos monetarios hacia ETFs pasivos, no son características propias de las empresas, no juegan ningún papel a la hora hallar el valor intrínseco de las acciones. También es importante destacar, que el número de acciones que actualmente se ven afectadas por este fenómeno es reducido, en torno al 7,3\% de las acciones del S\&P500. Esto implica que, actualmente, los efectos de la gestión pasiva están siendo determinantes en una minoría de las acciones del índice, aunque existe el riesgo de que estos efectos continúen expandiéndose.
+
+Una reflexión que subyace a los resultados de este estudio consiste en que, en un mundo hipotéticamente gobernado por la gestión pasiva donde el descubrimiento de precios no existiera, se presentaría una gran oportunidad para los gestores activos. En tal escenario, estos gestores podrían explotar múltiples ineficiencias del mercado para adquirir a precios muy reducidos empresas valiosas que, debido a la falta de análisis fundamental, no estarían adecuadamente valoradas. Estos gestores activos, aprovechando las oportunidades emergentes, actuarían como una especie de arbitrajistas, corrigiendo las distorsiones de precios al comprar activos infravalorados y vender aquellos sobrevalorados.
+
+Por este motivo, aunque la gestión pasiva continúe ganando terreno y alterando ciertas dinámicas del mercado, el descubrimiento de precios no parece que pueda llegar a desaparecer por completo. La intervención de los gestores activos aseguraría que las ineficiencias no persistan indefinidamente, contribuyendo al ajuste de los precios hacia sus valores intrínsecos. En esencia, la coexistencia de ambos tipos de gestión podría mantener un equilibrio dinámico en el mercado, donde las oportunidades para el descubrimiento de precios seguirán existiendo y siendo aprovechadas, garantizando así que los mercados de renta variable no pierdan completamente su eficiencia.
+
+En conclusión, este estudio aporta evidencia de que la gestión pasiva tiene a día de hoy un impacto significativo en determinadas acciones del S\&P 500 y podría representar una amenaza para la eficiencia de los mercados de renta variable. Sin embargo, en el estado actual, no parece estar influyendo de forma significativa en la mayor parte de las empresas del S\&P 500. Esta conclusión, contradice aquellas opiniones más radicales que sugieren que a día de hoy la eficiencia de los mercados ya se ha perdido.
+
+Por último, cabe mencionar que la complejidad del fenómeno y la influencia de múltiples factores externos resaltan la necesidad de continuar investigando para comprender plenamente sus implicaciones a largo plazo. Estos resultados invitan a futuras investigaciones que amplíen el periodo de análisis, considerando otros índices y mercados.
+
+\newpage
+
+\section{Referencias}
+
+\noindent
+Bassanese, D. (22 de Junio de 2017). FirstLinks. Obtenido de \url{https://www.firstlinks.com.au/passive-investment-outperformance-merely-cyclical}
+
+\noindent
+Blackrock. (2021). 4 TRENDS DRIVING ETF GROWTH. Obtenido de Blackrock: \url{https://www.blackrock.com/sg/en/ishares/insights/growth-trends}
+
+\noindent
+Bodie, Z. K. (2021). Investments (12th ed.). Massachusetts: McGraw-Hill Education.
+
+\noindent
+CFA Institute. (25 de Abril de 2019). CFA Institute. Obtenido de \url{https://rpc.cfainstitute.org/en/research/financial-analysts-journal/2017/john-c-bogle-profile-of-an-industry-leader}
+
+\noindent
+CNBC. (2024). Passive Investing Rules Wall Street Now, Topping Actively Managed Assets in Stock, Bond, and Other Funds. CNBC.
+
+\noindent
+Einhorn, D. (2024). Masters in Business [Grabado por Bloomberg]. \url{https://omny.fm/shows/masters-in-business/david-einhorn-market-structures-are-broken}.
+
+\noindent
+Englundh, J. (2023). A World Without Active Funds: Boring and Maybe Dangerous. Morningstar.
+
+\noindent
+Førde, O. P., \& Sundby, H. B. (2020). The hidden costs of passive investing : an empirical study on the impact of passive investing on the liquidity and price efficiency of Norwegian stocks.
+
+\noindent
+Gabaix, X. y. (2020). In Search of the Origins of Financial Fluctuations: The Inelastic Markets Hypothesis. Swiss Finance Institute Research.
+
+\noindent
+Gârleanu, N. (2021). Active and Passive Investing: Understanding Samuelson's Dictum. Oxford Academic.
+
+\noindent
+Glow, D. (2024 de Enero de 2024). Lipper Alpha. Obtenido de \url{https://lipperalpha.refinitiv.com/reports/2023/01/global-etf-industry-review-2023/}
+
+\noindent
+Hao Jiang, D. V. (2020). Tracking Biased Weights: Asset Pricing Implications of Value-Weighted Indexing. SSRN, 61.
+
+\noindent
+Hao Jiang, D. V. (2021). Passive Investing and the Rise of Mega-Firms. SSRN, 65.
+
+\noindent
+Israeli, D. L. (2017). Is There a Dark Side to Exchange Traded Funds? An Information Perspective.
+
+\noindent
+Jan Fichtner, E. M.-B. (s.f.). The Hidden Power of the Big Three: Passive Index Funds, Re-concentration of Corporate Ownership, and New Financial Risk. Business and Politics. Cambridge University Press, 2020.
+
+\noindent
+joe4942. (Diciembre de 2023). Reddit. Obtenido de ValueInvesting: \url{https://www.reddit.com/r/ValueInvesting/comments/17iswi3/is_passive_investing_causing_a_massive_bubble/}
+
+\noindent
+Justina Lee, Y. P. (2021). Wall Street Rebels Warn of 'Disastrous' \$11 Trillion Index Boom. Bloomberg News.
+
+\noindent
+Kenechukwu Anadu, M. S. (2018). The Shift from Active to Passive Investing: Potential Risks to Financial Stability. Harvard Law School Forum on Corporate Governance.
+
+\noindent
+Morningstar. (2023). Active/Passive Barometer Midyear 2023. Obtenido de \url{https://assets.contentstack.io/v3/assets/blt4eb669caa7dc65b2/blt30a76cc355dd2268/active-passive-barometer-midyear-2023.pdf}
+
+\noindent
+Pacheco Barceló, A. (2019). Instrumentos de Gestión Pasiva: Evolución, Ventajas y Riesgos. Universidad Complutense de Madrid.
+
+\noindent
+Ro, S. (2021). S\&P 500 index funds balloon. Axios.
+
+\noindent
+Sharma, R. (2017). What They Don't Tell You About Passive Investing. Morgan Stanley Investment Management.
+
+\noindent
+Swedroe, L. (Noviembre de 2023). Passive Investing Harms Market Efficiency. Obtenido de Morningstar: \url{https://www.morningstar.com/markets/how-passive-investing-harms-market-efficiency}
+
+\noindent
+Trainer, D. (2020). The Hidden Dangers of Passive Investing. Forbes.
+
+\noindent
+Valentin Haddad, P. H. (2021). How Competitive is the Stock Market? Theory, Evidence from Portfolios, and Implications for the Rise of Passive Investing.
+
+\noindent
+VettaFi. (Abril de 2024). ETFDB. Obtenido de \url{https://etfdb.com/screener/#tab=fund-flows&page=1&sort_by=five_year_ff&sort_direction=desc}
+
+\noindent
+Widdig, E. (23 de Junio de 2020). The Impact of Passive Capital on Financial. Obtenido de Focus Finance: \url{https://www.focusfinance.org/post/the-impact-of-passive-capital-on-financial-markets}
+
+\noindent
+Wright's Research. (23 de Enero de 2023). Michael Burry: The Passive Bubble Is Deflating. Obtenido de Seeking Alpha: \url{https://seekingalpha.com/article/4571634-michael-burry-the-passive-bubble-is-deflating}
+
+\newpage
+
+\section{Glosario}
+
+\begin{description}
+\item[ETF] Exchange Traded Fund.
+\item[NAV] Net Asset Value.
+\item[HFT] High-Frequency Trading.
+\item[API] Application Programming Interface.
+\item[SPY] SPDR S\&P 500 ETF Trust.
+\item[IVV] iShares Core S\&P 500 ETF.
+\item[VOO] Vanguard S\&P 500 ETF.
+\item[SMB] Small Minus Big.
+\item[HML] High Minus Low.
+\item[CAPM] Capital Asset Pricing Model.
+\item[EV] Enterprise Value.
+\end{description}
+
+\end{document}
